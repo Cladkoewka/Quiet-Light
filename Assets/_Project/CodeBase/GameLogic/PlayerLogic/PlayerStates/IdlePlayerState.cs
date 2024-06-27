@@ -4,7 +4,8 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 {
     public class IdlePlayerState : BasePlayerState
     {
-        public IdlePlayerState(PlayerController playerController, Animator animator) : base(playerController, animator) { }
+        public IdlePlayerState(Player player, PlayerController playerController, Animator animator) 
+            : base(player,playerController, animator) { }
         
         public override void OnEnter()
         {

@@ -18,7 +18,7 @@ namespace _Project.CodeBase.GameLogic.Camera
         [SerializeField] private Vector3 _cameraRotation;
 
         
-        public void Init(Transform followTransform) => 
+        public void Construct(Transform followTransform) => 
             _followTransform = followTransform;
 
         private void Awake() => 

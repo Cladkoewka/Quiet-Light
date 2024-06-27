@@ -1,28 +1,27 @@
 using UnityEngine;
-using Tree = _Project.CodeBase.GameLogic.GameplayLogic.Tree;
 
 namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 {
     public class ChopTreeState : BasePlayerState
     {
-        private readonly ResourcesTrigger _resourcesTrigger;
+        private readonly InteractionTrigger _interactionTrigger;
 
-        public ChopTreeState(PlayerController playerController, Animator animator, ResourcesTrigger resourcesTrigger) :
-            base(playerController, animator)
+        public ChopTreeState(Player player, PlayerController playerController, Animator animator, InteractionTrigger interactionTrigger)
+            : base(player,playerController, animator)
         {
-            _resourcesTrigger = resourcesTrigger;
+            _interactionTrigger = interactionTrigger;
         }
 
         public override void OnEnter()
         {
             Animator.CrossFade(ChopTree, CrossFadeDuration);
-            PlayerController.UpdateChopTreeTimer();
-            PlayerController.WatchTo(_resourcesTrigger.ActiveTree.transform.position);
+            Player.UpdateChopTreeTimer();
+            Player.WatchTo(_interactionTrigger.ActiveTree().transform.position);
         }
 
         public override void OnExit()
         {
-            _resourcesTrigger.ActiveTree.Cut();
+            _interactionTrigger.ActiveInteractable.Interact();
         }
 
         public override void FixedUpdate()

@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 
 namespace _Project.CodeBase.Services.Input
@@ -8,5 +9,6 @@ namespace _Project.CodeBase.Services.Input
         Vector3 MoveInput { get; }
         Vector3 CameraInput { get; }
         bool IsInterractButtonDown();
+        event Action OnInteract;
     }
 }

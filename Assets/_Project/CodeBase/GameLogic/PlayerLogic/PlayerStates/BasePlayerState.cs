@@ -5,6 +5,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 {
     public abstract class BasePlayerState : IState
     {
+        protected readonly Player Player;
         protected readonly PlayerController PlayerController;
         protected readonly Animator Animator;
 
@@ -14,8 +15,9 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 
         protected const float CrossFadeDuration = 0.1f;
 
-        protected BasePlayerState(PlayerController playerController, Animator animator)
+        protected BasePlayerState(Player player, PlayerController playerController, Animator animator)
         {
+            Player = player;
             PlayerController = playerController;
             Animator = animator;
         }

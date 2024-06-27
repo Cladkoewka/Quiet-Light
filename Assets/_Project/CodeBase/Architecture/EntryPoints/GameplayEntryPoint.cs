@@ -1,6 +1,8 @@
 using System;
 using _Project.CodeBase.Constants;
 using _Project.CodeBase.GameLogic.Camera;
+using _Project.CodeBase.GameLogic.PlayerLogic;
+using _Project.CodeBase.UI.HUD;
 using UnityEngine;
 using Zenject;
 
@@ -11,19 +13,21 @@ namespace _Project.CodeBase.Architecture.EntryPoints
         [Inject]
         private DiContainer _diContainer;
 
-        private GameObject _playerGameObject;
+        private Player _player;
 
         private void Awake()
         {
             InitWorld();
             InitPlayer();
             InitCamera();
+            InitUI();
         }
 
         private void InitPlayer()
         {
             var playerPrefab = Resources.Load(Paths.Player);
-            _playerGameObject = _diContainer.InstantiatePrefab(playerPrefab);
+            GameObject playerGameObject = _diContainer.InstantiatePrefab(playerPrefab);
+            _player = playerGameObject.GetComponent<Player>();
 
         }
 
@@ -36,7 +40,17 @@ namespace _Project.CodeBase.Architecture.EntryPoints
         {
             var cameraPrefab = Resources.Load(Paths.CameraRoot);
             GameObject cameraGameObject = _diContainer.InstantiatePrefab(cameraPrefab);
-            cameraGameObject.GetComponent<CameraRoot>().Init(_playerGameObject.transform);
+            CameraRoot cameraRoot = cameraGameObject.GetComponent<CameraRoot>();
+            cameraRoot.Construct(_player.transform);
+        }
+
+        private void InitUI()
+        {
+            var gameHUDPrefab = Resources.Load(Paths.GameHUD);
+            GameObject gameHUDGameObject = _diContainer.InstantiatePrefab(gameHUDPrefab);
+            GameHud gameHud = gameHUDGameObject.GetComponent<GameHud>();
+            InteractionTrigger interactionTrigger = _player.GetComponent<InteractionTrigger>();
+            gameHud.Construct(interactionTrigger);
         }
     }
 }

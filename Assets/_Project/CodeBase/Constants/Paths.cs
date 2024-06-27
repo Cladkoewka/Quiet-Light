@@ -7,5 +7,6 @@ namespace _Project.CodeBase.Constants
         public const string LoadingCurtain = "LoadingCurtain";
         public const string Player = "Player";
         public const string CameraRoot = "CameraRoot";
+        public const string GameHUD = "GameHUD";
     }
 }
