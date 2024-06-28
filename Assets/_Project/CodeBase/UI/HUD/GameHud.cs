@@ -1,33 +1,40 @@
-using System;
-using _Project.CodeBase.GameLogic.GameplayLogic;
 using _Project.CodeBase.GameLogic.PlayerLogic;
 using _Project.CodeBase.Services.Input;
 using UnityEngine;
 using Zenject;
-using Tree = _Project.CodeBase.GameLogic.GameplayLogic.Tree;
 
 namespace _Project.CodeBase.UI.HUD
 {
     public class GameHud : MonoBehaviour
     {
         [SerializeField] private InteractionHint _interactionHint;
+        [SerializeField] private CanvasGroup _coldHUD;
 
         private InteractionTrigger _interactionTrigger;
         private IInputService _inputService;
+        private PlayerCold _playerCold;
         
         [Inject]
-        public void Init(IInputService inputService, InteractionTrigger interactionTrigger)
+        public void Init(IInputService inputService, InteractionTrigger interactionTrigger, PlayerCold playerCold)
         {
             _inputService = inputService;
             _interactionTrigger = interactionTrigger;
+            _playerCold = playerCold;
             
             HideInteractHint();
             _inputService.OnInteract += HideInteractHint;
+            _coldHUD.alpha = 0;
         }
 
         private void Update()
         {
             UpdateInteractionHint();
+            UpdateColdHud();
+        }
+
+        private void UpdateColdHud()
+        {
+            _coldHUD.alpha = 1 - _playerCold.RemainingLifeMultiplier;
         }
 
         private void UpdateInteractionHint()
@@ -36,10 +43,23 @@ namespace _Project.CodeBase.UI.HUD
                 TreeHints();
             else if (_interactionTrigger.ActiveBench() != null)
                 BenchHints();
+            else if (_interactionTrigger.ActiveCampfire() != null)
+                CampfireHints();
             else if (_interactionTrigger.ActiveChuck() != null)
                 ChuckHints();
             else if (_interactionTrigger.ActiveFirewood() != null)
                 FirewoodHints();
+            else
+                SetInteractionHintActive(false);
+        }
+
+        private void CampfireHints()
+        {
+            if (_interactionTrigger.ActiveFirewood() != null && _interactionTrigger.ActiveFirewood().IsTaken)
+            {
+                SetInteractionHintActive(true);
+                _interactionHint.SetHintText("To Add Firewood");
+            }
             else
                 SetInteractionHintActive(false);
         }

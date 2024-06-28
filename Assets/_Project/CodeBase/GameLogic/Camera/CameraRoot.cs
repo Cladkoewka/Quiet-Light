@@ -17,6 +17,8 @@ namespace _Project.CodeBase.GameLogic.Camera
         [SerializeField] private Vector3 _cameraOffset;
         [SerializeField] private Vector3 _cameraRotation;
 
+        public Quaternion CameraRotation => _cameraTransform.rotation;
+
         
         [Inject]
         public void Init(Player player)

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using _Project.CodeBase.Architecture.StateMachine;
 using _Project.CodeBase.GameLogic.GameplayLogic;
 using _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates;
@@ -28,6 +29,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         private ICarriable _currentCarriable;
 
         public Transform CarryPoint => _carryPointTransform;
+        public ICarriable Carriable => _currentCarriable;
 
 
         private void Awake()
@@ -43,12 +45,28 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         private void FixedUpdate() => 
             _stateMachine.FixedUpdate();
 
-        
-
         public void RestartCutTreeTimer() => 
             _startCutTreeTime = Time.time;
         public void RestartChopChuckTimer() => 
             _startChopChuckTime = Time.time;
+
+        public void RemoveCarriable()
+        {
+            IRemovable removable = _currentCarriable as IRemovable;
+            removable?.Remove();
+            _currentCarriable = null;
+        }
+        public void UpdateInteraction()
+        {
+            if (_playerController.IsInteracting())
+                _interactionTrigger.ActiveInteractable?.Interact();
+        }
+
+        public void SetCarriable(ICarriable carriable) => 
+            _currentCarriable = carriable;
+
+        public void SetAxeActive(bool value) => 
+            _axeGameObject.SetActive(value);
 
         private void SetupStateMachine()
         {
@@ -81,24 +99,12 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
 
         }
 
-        public void UpdateInteraction()
-        {
-            if (_playerController.IsInteracting())
-                _interactionTrigger.ActiveInteractable.Interact();
-        }
-
-        public void SetCarriable(ICarriable carriable) => 
-            _currentCarriable = carriable;
-
-        public void SetAxeActive(bool value) => 
-            _axeGameObject.SetActive(value);
-
         private bool IsShouldCarry() => 
             _currentCarriable != null;
 
         private bool TreeIsCutted() => 
             Time.time - _startCutTreeTime  >= _cutTreeTime;
-        
+
         private bool ChuckIsChopped() => 
             Time.time - _startChopChuckTime  >= _cutTreeTime;
 
@@ -112,5 +118,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         private void At(IState from, IState to, IPredicate condition) => _stateMachine.AddTransition(from, to, condition);
 
         private void Any(IState to, IPredicate condition) => _stateMachine.AddAnyTransition(to, condition);
+
+        
     }
 }

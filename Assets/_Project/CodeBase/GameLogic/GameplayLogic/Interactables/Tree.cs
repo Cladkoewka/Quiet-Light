@@ -38,7 +38,8 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
 
         public void ShowInteractable(bool value)
         {
-            _canInteractCircle?.SetActive(value);
+            bool isInteractable = value && !IsCutted;
+            _canInteractCircle?.SetActive(isInteractable);
         }
 
         public void Interact() => 

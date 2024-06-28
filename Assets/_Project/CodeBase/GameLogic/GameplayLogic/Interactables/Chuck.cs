@@ -56,6 +56,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
             _player.SetCarriable(null);
         }
 
+
         private void Take()
         {
             IsTaken = true;

@@ -13,6 +13,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         private Bench _bench;
         private Firewood _firewood;
         private Tree _tree;
+        private Campfire _campfire;
         
         
         private void OnTriggerEnter(Collider other)
@@ -44,6 +45,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         public Chuck ActiveChuck() => _chuck;
         public Bench ActiveBench() => _bench;
         public Firewood ActiveFirewood() => _firewood;
+        public Campfire ActiveCampfire() => _campfire;
         
         
         private void UpdateActiveInteractable(IInteractable otherInteractable)
@@ -78,6 +80,10 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
             Firewood firewood = otherInteractable as Firewood;
             if (_firewood == firewood)
                 _firewood = null;
+            
+            Campfire campfire = otherInteractable as Campfire;
+            if (_campfire == campfire)
+                _campfire = null;
         }
 
         private void TryAddCast(IInteractable otherInteractable)
@@ -97,6 +103,11 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
             Firewood firewood = otherInteractable as Firewood;
             if (firewood != null)
                 _firewood = firewood;
+            
+            Campfire campfire = otherInteractable as Campfire;
+            if (campfire != null)
+                _campfire = campfire;
         }
+
     }
 }

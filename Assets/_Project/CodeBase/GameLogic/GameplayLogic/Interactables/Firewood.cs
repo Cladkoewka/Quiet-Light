@@ -4,11 +4,14 @@ using Zenject;
 
 namespace _Project.CodeBase.GameLogic.GameplayLogic
 {
-    public class Firewood : MonoBehaviour, IInteractable, ICarriable
+    public class Firewood : MonoBehaviour, IInteractable, ICarriable, IRemovable
     {
+        [Header("Links")]
         [SerializeField] private GameObject _canInteractCircle;
         [SerializeField] private Collider _collider;
         [SerializeField] private Collider _triggerCollider;
+        
+        [Header("Parameters")]
         [SerializeField] private float _carryScaleMultiplier = 0.7f;
 
         
@@ -61,6 +64,11 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
             transform.localPosition = _player.CarryPoint.localPosition;
             _player.SetAxeActive(false);
             _player.SetCarriable(this);
+        }
+
+        public void Remove()
+        {
+            Destroy(gameObject);
         }
 
         private void Drop()

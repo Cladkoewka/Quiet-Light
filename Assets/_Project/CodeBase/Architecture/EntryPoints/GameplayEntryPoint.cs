@@ -6,15 +6,29 @@ using _Project.CodeBase.GameLogic.PlayerLogic;
 using _Project.CodeBase.UI.HUD;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 namespace _Project.CodeBase.Architecture.EntryPoints
 {
     public class GameplayEntryPoint : MonoBehaviour
     {
+        private const float TreeSpawnIndentFromZeroCoordinates = 4f;
+        private const int GroundSize = 100;
+
+        [Header("Prefabs")]
         [SerializeField] private GameObject _treePrefab;
         [SerializeField] private GameObject _benchPrefab;
-        [SerializeField] private Transform _treeSpawnPoint;
+        [SerializeField] private GameObject _campfirePrefab;
+        
+        [Header("World")] 
+        [SerializeField] private Transform _worldTransform;
         [SerializeField] private Transform _benchSpawnPoint;
+        [SerializeField] private Transform _campfireSpawnPoint;
+        [SerializeField] private Transform _playerSpawnPoint;
+
+        [Header("Parameters")] [SerializeField]
+        private int _treesCount = 20;
+        
         
         [Inject]
         private DiContainer _diContainer;
@@ -23,27 +37,58 @@ namespace _Project.CodeBase.Architecture.EntryPoints
         private void Awake()
         {
             InitPlayer();
-            InitWorld();
             InitCamera();
+            InitWorld();
             InitUI();
         }
 
         private void InitPlayer()
         {
             var playerPrefab = Resources.Load(Paths.Player);
-            GameObject playerGameObject = _diContainer.InstantiatePrefab(playerPrefab);
+            GameObject playerGameObject = _diContainer.InstantiatePrefab(playerPrefab, _playerSpawnPoint.position,
+                Quaternion.identity, null);
             Player player = playerGameObject.GetComponent<Player>();
             _diContainer.BindInstance(player).AsSingle();
             InteractionTrigger interactionTrigger = playerGameObject.GetComponent<InteractionTrigger>();
             _diContainer.BindInstance(interactionTrigger).AsSingle();
-            //PlayerController playerController = playerGameObject.GetComponent<PlayerController>();
-            //_diContainer.BindInstance(playerController).AsSingle();
+            PlayerCold playerCold = playerGameObject.GetComponent<PlayerCold>();
+            _diContainer.BindInstance(playerCold).AsSingle();
         }
 
         private void InitWorld()
         {
-            _diContainer.InstantiatePrefab(_treePrefab, _treeSpawnPoint);
-            GameObject benchGameObject = _diContainer.InstantiatePrefab(_benchPrefab, _benchSpawnPoint);
+            InitTrees();
+            InitBench();
+            InitCampfire();
+        }
+
+        private void InitTrees()
+        {
+            for (int i = 0; i < _treesCount; i++)
+            {
+                float x = RandomCoordinate();
+                float y = RandomCoordinate();
+                var spawnPosition = new Vector3(x, 0, y);
+                var spawnRotation = Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0));
+                _diContainer.InstantiatePrefab(_treePrefab, spawnPosition, spawnRotation, _worldTransform);
+            }
+            
+        }
+
+        
+
+        private void InitCampfire()
+        {
+            GameObject benchGameObject = _diContainer.InstantiatePrefab(_campfirePrefab, _campfireSpawnPoint.position, 
+                Quaternion.identity, _worldTransform);
+            Campfire campfire = benchGameObject.GetComponent<Campfire>();
+            _diContainer.BindInstance(campfire).AsSingle();
+        }
+
+        private void InitBench()
+        {
+            GameObject benchGameObject = _diContainer.InstantiatePrefab(_benchPrefab, _benchSpawnPoint.position, 
+                Quaternion.identity, _worldTransform);
             Bench bench = benchGameObject.GetComponent<Bench>();
             _diContainer.BindInstance(bench).AsSingle();
         }
@@ -52,6 +97,8 @@ namespace _Project.CodeBase.Architecture.EntryPoints
         {
             var cameraPrefab = Resources.Load(Paths.CameraRoot);
             GameObject cameraGameObject = _diContainer.InstantiatePrefab(cameraPrefab);
+            CameraRoot cameraRoot = cameraGameObject.GetComponent<CameraRoot>();
+            _diContainer.BindInstance(cameraRoot).AsSingle();
         }
 
         private void InitUI()
@@ -59,6 +106,18 @@ namespace _Project.CodeBase.Architecture.EntryPoints
             var gameHUDPrefab = Resources.Load(Paths.GameHUD);
             GameObject gameHUDGameObject = _diContainer.InstantiatePrefab(gameHUDPrefab);
             GameHud gameHud = gameHUDGameObject.GetComponent<GameHud>();
+        }
+        
+        private static float RandomCoordinate()
+        {
+            float x;
+            while (true)
+            {
+                x = Random.Range(-GroundSize/2, GroundSize/2);
+                if (Math.Abs(x) > TreeSpawnIndentFromZeroCoordinates)
+                    break;
+            }
+            return x;
         }
     }
 }
