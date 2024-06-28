@@ -10,8 +10,11 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         protected readonly Animator Animator;
 
         protected static readonly int MoveHash = Animator.StringToHash("Move");
+        protected static readonly int CarryMoveHash = Animator.StringToHash("Carry Move");
         protected static readonly int IdleHash = Animator.StringToHash("Idle");
-        protected static readonly int ChopTree = Animator.StringToHash("Chop Tree");
+        protected static readonly int CarryIdleHash = Animator.StringToHash("Carry Idle");
+        protected static readonly int CutTree = Animator.StringToHash("Cut Tree");
+        protected static readonly int ChopChuck = Animator.StringToHash("Chop Chuck");
 
         protected const float CrossFadeDuration = 0.1f;
 
@@ -24,7 +27,6 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         
         public virtual void OnEnter()
         {
-            Animator.CrossFade(MoveHash, CrossFadeDuration);
         }
 
         public virtual void FixedUpdate()

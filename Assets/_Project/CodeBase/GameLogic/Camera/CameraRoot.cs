@@ -18,8 +18,11 @@ namespace _Project.CodeBase.GameLogic.Camera
         [SerializeField] private Vector3 _cameraRotation;
 
         
-        public void Construct(Transform followTransform) => 
-            _followTransform = followTransform;
+        [Inject]
+        public void Init(Player player)
+        {
+            _followTransform = player.transform;
+        }
 
         private void Awake() => 
             SetCameraGameplayTransform();

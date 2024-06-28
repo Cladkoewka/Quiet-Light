@@ -29,7 +29,14 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
             transform.Rotate(Vector3.up * _inputService.CameraInput.x * _rotatitonSensitivity, Space.Self);
             
             Vector3 moveDirection = transform.TransformDirection(_inputService.MoveInput);
-            _characterController.Move(moveDirection * _moveSpeed * Time.deltaTime);
+            Vector3 moveVector = moveDirection * _moveSpeed * Time.deltaTime;
+            moveVector.y = 0;
+            _characterController.Move(moveVector);
+        }
+        public void WatchTo(Vector3 transformPosition)
+        {
+            Vector3 direction = transformPosition - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction, Vector3.up);
         }
 
         public bool IsMoving() => 

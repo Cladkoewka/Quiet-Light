@@ -15,6 +15,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         public override void Update()
         {
             PlayerController.HandleMovement();
+            Player.UpdateInteraction();
         }
     }
 }

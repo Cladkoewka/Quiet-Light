@@ -2,18 +2,19 @@ using UnityEngine;
 
 namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 {
-    public class IdlePlayerState : BasePlayerState
+    public class CarryMovePlayerState : BasePlayerState
     {
-        public IdlePlayerState(Player player, PlayerController playerController, Animator animator) 
+        public CarryMovePlayerState(Player player, PlayerController playerController, Animator animator) 
             : base(player, playerController, animator) { }
         
         public override void OnEnter()
         {
-            Animator.CrossFade(IdleHash, CrossFadeDuration);
+            Animator.CrossFade(CarryMoveHash, CrossFadeDuration);
         }
 
         public override void Update()
         {
+            PlayerController.HandleMovement();
             Player.UpdateInteraction();
         }
     }
