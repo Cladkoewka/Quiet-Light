@@ -1,9 +1,8 @@
 using _Project.CodeBase.GameLogic.PlayerLogic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
-namespace _Project.CodeBase.GameLogic.GameplayLogic
+namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
 {
     public class Chuck : MonoBehaviour, IInteractable, ICarriable
     {

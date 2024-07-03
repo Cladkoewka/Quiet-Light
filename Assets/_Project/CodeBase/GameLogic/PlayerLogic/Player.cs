@@ -1,7 +1,9 @@
 using System.Security.Cryptography;
 using _Project.CodeBase.Architecture.StateMachine;
 using _Project.CodeBase.GameLogic.GameplayLogic;
+using _Project.CodeBase.GameLogic.GameplayLogic.Interactables;
 using _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates;
+using _Project.CodeBase.Services.Audio;
 using UnityEngine;
 using Zenject;
 
@@ -24,13 +26,17 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
 
         
         private StateMachine _stateMachine;
+        private AudioManager _audioManager;
+
         private float _startCutTreeTime;
         private float _startChopChuckTime;
-        private ICarriable _currentCarriable;
 
         public Transform CarryPoint => _carryPointTransform;
-        public ICarriable Carriable => _currentCarriable;
+        public ICarriable Carriable { get; private set; }
 
+        [Inject]
+        public void Init(AudioManager audioManager) => 
+            _audioManager = audioManager;
 
         private void Awake()
         {
@@ -52,9 +58,9 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
 
         public void RemoveCarriable()
         {
-            IRemovable removable = _currentCarriable as IRemovable;
+            IRemovable removable = Carriable as IRemovable;
             removable?.Remove();
-            _currentCarriable = null;
+            Carriable = null;
         }
         public void UpdateInteraction()
         {
@@ -63,7 +69,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         }
 
         public void SetCarriable(ICarriable carriable) => 
-            _currentCarriable = carriable;
+            Carriable = carriable;
 
         public void SetAxeActive(bool value) => 
             _axeGameObject.SetActive(value);
@@ -72,12 +78,12 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         {
             _stateMachine = new StateMachine();
 
-            var moveState = new MovePlayerState(this, _playerController, _animator);
-            var carryMoveState = new CarryMovePlayerState(this, _playerController, _animator);
+            var moveState = new MovePlayerState(this, _playerController, _animator, _audioManager);
+            var carryMoveState = new CarryMovePlayerState(this, _playerController, _animator, _audioManager);
             var idleState = new IdlePlayerState(this,_playerController, _animator);
             var carryIdleState = new CarryIdlePlayerState(this, _playerController, _animator, _interactionTrigger);
-            var cutTreeState = new CutTreeState(this,_playerController, _animator, _interactionTrigger);
-            var chopChuckState = new ChopChuckState(this, _playerController, _animator, _interactionTrigger);
+            var cutTreeState = new CutTreeState(this,_playerController, _animator, _interactionTrigger, _audioManager);
+            var chopChuckState = new ChopChuckState(this, _playerController, _animator, _interactionTrigger, _audioManager);
             
             At(idleState, moveState, new FuncPredicate(() => _playerController.IsMoving()));
             At(moveState, idleState, new FuncPredicate(() => !_playerController.IsMoving()));
@@ -100,13 +106,13 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         }
 
         private bool IsShouldCarry() => 
-            _currentCarriable != null;
+            Carriable != null;
 
         private bool TreeIsCutted() => 
             Time.time - _startCutTreeTime  >= _cutTreeTime;
 
         private bool ChuckIsChopped() => 
-            Time.time - _startChopChuckTime  >= _cutTreeTime;
+            Time.time - _startChopChuckTime  >= _chopChuckTime;
 
         private bool IsCutTree() => 
             _interactionTrigger.ActiveTree() != null && _playerController.IsInteracting();

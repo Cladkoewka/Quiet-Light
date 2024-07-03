@@ -26,5 +26,7 @@ namespace _Project.CodeBase.Services.Input
         }
 
         public event Action OnInteract;
+        public void SetCursor(bool isVisible) => 
+            Cursor.visible = isVisible;
     }
 }

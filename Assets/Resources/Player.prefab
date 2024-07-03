@@ -881,7 +881,7 @@ MonoBehaviour:
   _playerController: {fileID: 5542683634402253836}
   _carryPointTransform: {fileID: 8067810661506161751}
   _axeGameObject: {fileID: 5570646933592709880}
-  _cutTreeTime: 2
+  _cutTreeTime: 4
   _chopChuckTime: 2
 --- !u!114 &5542683634402253836
 MonoBehaviour:

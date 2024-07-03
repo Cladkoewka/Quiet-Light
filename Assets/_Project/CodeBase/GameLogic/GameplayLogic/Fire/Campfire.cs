@@ -1,13 +1,10 @@
 using System;
-using _Project.CodeBase.GameLogic.Camera;
-using _Project.CodeBase.GameLogic.GameplayLogic.Fire;
+using _Project.CodeBase.GameLogic.GameplayLogic.Interactables;
 using _Project.CodeBase.GameLogic.PlayerLogic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 using Zenject;
 
-namespace _Project.CodeBase.GameLogic.GameplayLogic
+namespace _Project.CodeBase.GameLogic.GameplayLogic.Fire
 {
     public class Campfire : MonoBehaviour, IInteractable
     {

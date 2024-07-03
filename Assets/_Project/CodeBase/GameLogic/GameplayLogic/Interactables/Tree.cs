@@ -1,9 +1,9 @@
-using System;
 using System.Collections;
+using _Project.CodeBase.Services.Audio;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.CodeBase.GameLogic.GameplayLogic
+namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
 {
     public class Tree : MonoBehaviour, IInteractable
     {
@@ -25,11 +25,13 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
 
 
         private DiContainer _diContainer;
+        private AudioManager _audioManager;
 
         [Inject]
-        public void Init(DiContainer diContainer)
+        public void Init(DiContainer diContainer, AudioManager audioManager)
         {
             _diContainer = diContainer;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
@@ -58,6 +60,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
 
         private IEnumerator CutCoroutine()
         {
+            _audioManager.PlayCutTreeSound();
             _animator.SetTrigger(CutTrigger);
             _cutChuck.transform.parent = null;
             yield return new WaitForSeconds(_lifeTimeAfterCut);

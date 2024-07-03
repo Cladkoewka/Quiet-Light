@@ -2,7 +2,7 @@ using _Project.CodeBase.GameLogic.PlayerLogic;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.CodeBase.GameLogic.GameplayLogic
+namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
 {
     public class Firewood : MonoBehaviour, IInteractable, ICarriable, IRemovable
     {

@@ -7,6 +7,9 @@ namespace _Project.CodeBase.UI.HUD
 {
     public class GameHud : MonoBehaviour
     {
+        private const float MinColdAlpha = 0;
+        private const float MaxColdAlpha = 0.3f;
+        
         [SerializeField] private InteractionHint _interactionHint;
         [SerializeField] private CanvasGroup _coldHUD;
 
@@ -34,7 +37,8 @@ namespace _Project.CodeBase.UI.HUD
 
         private void UpdateColdHud()
         {
-            _coldHUD.alpha = 1 - _playerCold.RemainingLifeMultiplier;
+            var multiplier = 1 - _playerCold.RemainingLifeMultiplier;
+            _coldHUD.alpha = Mathf.Lerp(MinColdAlpha, MaxColdAlpha, multiplier);
         }
 
         private void UpdateInteractionHint()

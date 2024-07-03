@@ -1,7 +1,9 @@
 using System;
 using _Project.CodeBase.GameLogic.GameplayLogic;
+using _Project.CodeBase.GameLogic.GameplayLogic.Fire;
+using _Project.CodeBase.GameLogic.GameplayLogic.Interactables;
 using UnityEngine;
-using Tree = _Project.CodeBase.GameLogic.GameplayLogic.Tree;
+using Tree = _Project.CodeBase.GameLogic.GameplayLogic.Interactables.Tree;
 
 namespace _Project.CodeBase.GameLogic.PlayerLogic
 {

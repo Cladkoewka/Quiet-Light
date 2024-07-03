@@ -32,8 +32,6 @@ namespace _Project.CodeBase.Services.SceneLoad
 
             yield return SceneManager.LoadSceneAsync(Scenes.EMPTY);
             yield return SceneManager.LoadSceneAsync(sceneName);
-
-            yield return new WaitForSeconds(0.5f);
             
             _uiRoot.HideLoadingScreen();
         }

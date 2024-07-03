@@ -32,6 +32,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
             Vector3 moveVector = moveDirection * _moveSpeed * Time.deltaTime;
             moveVector.y = 0;
             _characterController.Move(moveVector);
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
         public void WatchTo(Vector3 transformPosition)
         {

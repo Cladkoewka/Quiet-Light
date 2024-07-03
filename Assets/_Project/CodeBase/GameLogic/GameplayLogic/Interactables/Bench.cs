@@ -1,9 +1,10 @@
 using System.Collections;
 using _Project.CodeBase.GameLogic.PlayerLogic;
+using _Project.CodeBase.Services.Audio;
 using UnityEngine;
 using Zenject;
 
-namespace _Project.CodeBase.GameLogic.GameplayLogic
+namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
 {
     public class Bench : MonoBehaviour, IInteractable
     {
@@ -19,12 +20,14 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
         
         private IInteractable _placedInteractable;
         private DiContainer _diContainer;
+        private AudioManager _audioManager;
 
         [Inject]
-        public void Init(InteractionTrigger interactionTrigger, DiContainer diContainer)
+        public void Init(InteractionTrigger interactionTrigger, DiContainer diContainer, AudioManager audioManager)
         {
             _interactionTrigger = interactionTrigger;
             _diContainer = diContainer;
+            _audioManager = audioManager;
         }
         private void Awake()
         {
@@ -92,6 +95,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic
             Firewood firewood = firewoodGameObject.GetComponent<Firewood>();
             _placedInteractable = firewood;
             firewood.Place();
+            _audioManager.PlayChangeSound();
         }
 
         private void DeleteChuck()

@@ -2,7 +2,11 @@ using System;
 using _Project.CodeBase.Constants;
 using _Project.CodeBase.GameLogic.Camera;
 using _Project.CodeBase.GameLogic.GameplayLogic;
+using _Project.CodeBase.GameLogic.GameplayLogic.Fire;
+using _Project.CodeBase.GameLogic.GameplayLogic.Interactables;
 using _Project.CodeBase.GameLogic.PlayerLogic;
+using _Project.CodeBase.Services.Audio;
+using _Project.CodeBase.Services.Input;
 using _Project.CodeBase.UI.HUD;
 using UnityEngine;
 using Zenject;
@@ -30,8 +34,18 @@ namespace _Project.CodeBase.Architecture.EntryPoints
         private int _treesCount = 20;
         
         
-        [Inject]
+        
         private DiContainer _diContainer;
+        private IInputService _inputService;
+        private AudioManager _audioManager;
+
+        [Inject]
+        public void Init(DiContainer diContainer, IInputService inputService, AudioManager audioManager)
+        {
+            _diContainer = diContainer;
+            _inputService = inputService;
+            _audioManager = audioManager;
+        }
 
 
         private void Awake()
@@ -40,7 +54,11 @@ namespace _Project.CodeBase.Architecture.EntryPoints
             InitCamera();
             InitWorld();
             InitUI();
+            InitSounds();
         }
+
+        private void InitSounds() => 
+            _audioManager.SetWindSound(true);
 
         private void InitPlayer()
         {
@@ -106,6 +124,7 @@ namespace _Project.CodeBase.Architecture.EntryPoints
             var gameHUDPrefab = Resources.Load(Paths.GameHUD);
             GameObject gameHUDGameObject = _diContainer.InstantiatePrefab(gameHUDPrefab);
             GameHud gameHud = gameHUDGameObject.GetComponent<GameHud>();
+            _inputService.SetCursor(false);
         }
         
         private static float RandomCoordinate()

@@ -8,5 +8,6 @@ namespace _Project.CodeBase.Constants
         public const string Player = "Player";
         public const string CameraRoot = "CameraRoot";
         public const string GameHUD = "GameHUD";
+        public const string AudioManager = "AudioManager";
     }
 }

@@ -6,7 +6,8 @@ namespace _Project.CodeBase.UI
     public class LoadingCurtain : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _loadingScreen;
-        [SerializeField] private float _fadeTime = 2f;
+        [SerializeField] private GameObject _loadingCurtain;
+        [SerializeField] private float _fadeTime = 0.5f;
 
         private void Awake()
         {
@@ -18,6 +19,7 @@ namespace _Project.CodeBase.UI
 
         public void ShowLoadingScreen()
         {
+            _loadingCurtain.SetActive(true);
             _loadingScreen.alpha = 1;
         }
 
@@ -35,6 +37,7 @@ namespace _Project.CodeBase.UI
             }
 
             _loadingScreen.alpha = endAlpha;
+            _loadingCurtain.SetActive(false);
         }
     }
 }

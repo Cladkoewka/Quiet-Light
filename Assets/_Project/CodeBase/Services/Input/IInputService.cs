@@ -10,5 +10,6 @@ namespace _Project.CodeBase.Services.Input
         Vector3 CameraInput { get; }
         bool IsInterractButtonDown();
         event Action OnInteract;
+        void SetCursor(bool isVisible);
     }
 }

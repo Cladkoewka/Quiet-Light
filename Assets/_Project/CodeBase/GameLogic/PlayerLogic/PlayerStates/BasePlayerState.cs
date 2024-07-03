@@ -31,7 +31,6 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
 
         public virtual void FixedUpdate()
         {
-            PlayerController.HandleMovement();
         }
 
         public virtual void Update() { }
