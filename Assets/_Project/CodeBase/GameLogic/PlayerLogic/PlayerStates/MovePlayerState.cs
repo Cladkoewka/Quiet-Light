@@ -17,6 +17,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         {
            Animator.CrossFade(MoveHash, CrossFadeDuration);
            _audioManager.SetFootstepSound(true);
+           Player.SetAxeActive(true);
         }
 
         public override void OnExit()

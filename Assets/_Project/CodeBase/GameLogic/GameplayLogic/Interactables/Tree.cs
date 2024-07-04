@@ -1,6 +1,7 @@
 using System.Collections;
 using _Project.CodeBase.Services.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
@@ -17,6 +18,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
         [SerializeField] private GameObject _cutChuck;
         [SerializeField] private Transform _chuckSpawnPosition;
         [SerializeField] private Animator _animator;
+        [SerializeField] private Collider _interactionTriggerCollider;
         [Header("Parameters")]
         [SerializeField] private float _lifeTimeAfterCut;
         [SerializeField] private float _transformationPrevarm = 0.1f;
@@ -60,6 +62,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
 
         private IEnumerator CutCoroutine()
         {
+            _interactionTriggerCollider.enabled = false;
             _audioManager.PlayCutTreeSound();
             _animator.SetTrigger(CutTrigger);
             _cutChuck.transform.parent = null;

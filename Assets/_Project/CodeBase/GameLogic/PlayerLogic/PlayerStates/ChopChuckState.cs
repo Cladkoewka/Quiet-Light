@@ -19,7 +19,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         public override void OnEnter()
         {
             Animator.CrossFade(ChopChuck, CrossFadeDuration);
-            _audioManager.SetAxeSound(true);
+            _audioManager.SetCutAxeSound(true);
             Player.RestartChopChuckTimer();
             PlayerController.WatchTo(_interactionTrigger.ActiveBench().transform.position);
         }
@@ -27,7 +27,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         public override void OnExit()
         {
             _interactionTrigger.ActiveInteractable.Interact();
-            _audioManager.SetAxeSound(false);
+            _audioManager.SetCutAxeSound(false);
         }
 
     }

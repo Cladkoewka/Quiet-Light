@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Project.CodeBase.Services.Audio
 {
@@ -6,7 +7,8 @@ namespace _Project.CodeBase.Services.Audio
     {
         [SerializeField] private AudioSource _music;
         [SerializeField] private AudioSource _windSound;
-        [SerializeField] private AudioSource _axeSound;
+        [SerializeField] private AudioSource _cutAxeSound;
+        [SerializeField] private AudioSource _chopAxeSound;
         [SerializeField] private AudioSource _stepSound;
         [SerializeField] private AudioSource _heartbeat;
         [SerializeField] private AudioSource _change;
@@ -44,14 +46,16 @@ namespace _Project.CodeBase.Services.Audio
                 _stepSound.Stop();
         }
 
-        public void SetAxeSound(bool isPlaying)
+        public void SetCutAxeSound(bool isPlaying)
         {
+            Debug.Log($"Axe sound is playing {isPlaying}");
             if(isPlaying)
-                _axeSound.Play();
+                _cutAxeSound.Play();
             else
-                _axeSound.Stop();
+                _cutAxeSound.Stop();
         }
         public void PlayChangeSound() => _change.Play();
+        public void PlayChopAxeSound() => _chopAxeSound.Play();
         public void PlayCutTreeSound() => _cutTree.Play();
     }
 }

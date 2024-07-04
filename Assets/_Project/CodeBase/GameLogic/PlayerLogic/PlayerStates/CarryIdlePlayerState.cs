@@ -15,6 +15,7 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         public override void OnEnter()
         {
             Animator.CrossFade(CarryIdleHash, CrossFadeDuration);
+            Player.SetAxeActive(false);
         }
 
         public override void Update()

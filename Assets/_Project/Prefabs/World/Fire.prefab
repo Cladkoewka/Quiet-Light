@@ -348,7 +348,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 6c4de0c01eb5e9041b0a0ca1ab3305e6, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -655,7 +655,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2
+  m_Radius: 1.5
   m_Height: 6
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}

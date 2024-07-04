@@ -19,16 +19,17 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic.PlayerStates
         public override void OnEnter()
         {
             Animator.CrossFade(CutTree, CrossFadeDuration);
-            _audioManager.SetAxeSound(true);
+            _audioManager.SetCutAxeSound(true);
             Player.RestartCutTreeTimer();
             PlayerController.WatchTo(_interactionTrigger.ActiveTree().transform.position);
             _interactionTrigger.ActiveTree().StartCut();
+            _interactionTrigger.ResetActiveTree();
         }
 
         public override void OnExit()
         {
             _interactionTrigger.ActiveInteractable.Interact();
-            _audioManager.SetAxeSound(false);
+            _audioManager.SetCutAxeSound(false);
         }
 
     }

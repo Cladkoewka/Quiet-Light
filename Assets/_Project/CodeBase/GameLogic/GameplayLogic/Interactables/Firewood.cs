@@ -62,7 +62,6 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
             transform.localScale = Vector3.one * _carryScaleMultiplier;
             transform.parent = _player.transform;
             transform.localPosition = _player.CarryPoint.localPosition;
-            _player.SetAxeActive(false);
             _player.SetCarriable(this);
         }
 
@@ -79,7 +78,6 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
             transform.localScale = Vector3.one;
             transform.parent = null;
             transform.position = GroundedPosition();
-            _player.SetAxeActive(true);
             _player.SetCarriable(null);
         }
         

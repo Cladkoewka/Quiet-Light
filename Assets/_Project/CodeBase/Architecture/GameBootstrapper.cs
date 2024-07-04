@@ -1,5 +1,3 @@
-using System;
-using _Project.CodeBase.Architecture.Installers;
 using _Project.CodeBase.Constants;
 using _Project.CodeBase.Services.SceneLoad;
 using UnityEngine;

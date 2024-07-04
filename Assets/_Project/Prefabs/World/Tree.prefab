@@ -657,6 +657,7 @@ MonoBehaviour:
   _cutChuck: {fileID: 5940875008358648742}
   _chuckSpawnPosition: {fileID: 7718839849988186325}
   _animator: {fileID: 3381514765507541800}
+  _interactionTriggerCollider: {fileID: 3291630108277329810}
   _lifeTimeAfterCut: 2.3
   _transformationPrevarm: 0.1
 --- !u!136 &3291630108277329810

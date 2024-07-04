@@ -8,6 +8,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
     {
         [SerializeField] private GameObject _canInteractCircle;
         [SerializeField] private Collider _collider;
+        [SerializeField] private Collider _triggerCollider;
         [SerializeField] private float _carryScaleMultiplier = 0.7f;
 
         
@@ -51,8 +52,8 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
             transform.localScale = Vector3.one * _carryScaleMultiplier;
             transform.parent = placeTransform;
             transform.position = placeTransform.position;
-            _player.SetAxeActive(true);
             _player.SetCarriable(null);
+            _triggerCollider.enabled = false;
         }
 
 
@@ -64,7 +65,6 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
             transform.localScale = Vector3.one * _carryScaleMultiplier;
             transform.parent = _player.transform;
             transform.localPosition = _player.CarryPoint.localPosition;
-            _player.SetAxeActive(false);
             _player.SetCarriable(this);
             
         }
@@ -77,7 +77,6 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Interactables
             transform.localScale = Vector3.one;
             transform.parent = null;
             transform.position = GroundedPosition();
-            _player.SetAxeActive(true);
             _player.SetCarriable(null);
         }
 

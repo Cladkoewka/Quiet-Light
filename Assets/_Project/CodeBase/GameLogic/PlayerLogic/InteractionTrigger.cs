@@ -48,8 +48,11 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
         public Bench ActiveBench() => _bench;
         public Firewood ActiveFirewood() => _firewood;
         public Campfire ActiveCampfire() => _campfire;
-        
-        
+
+
+        public void ResetActiveTree() => 
+            _tree = null;
+
         private void UpdateActiveInteractable(IInteractable otherInteractable)
         {
             TryAddCast(otherInteractable);
@@ -110,6 +113,5 @@ namespace _Project.CodeBase.GameLogic.PlayerLogic
             if (campfire != null)
                 _campfire = campfire;
         }
-
     }
 }

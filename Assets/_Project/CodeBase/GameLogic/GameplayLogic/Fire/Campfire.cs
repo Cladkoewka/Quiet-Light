@@ -44,6 +44,7 @@ namespace _Project.CodeBase.GameLogic.GameplayLogic.Fire
             _remainingTime = _campfireLifetime;
             _currentLevel = LevelsCount;
             SetLevel(LevelsCount);
+            ShowInteractable(false);
         }
 
         private void Update()

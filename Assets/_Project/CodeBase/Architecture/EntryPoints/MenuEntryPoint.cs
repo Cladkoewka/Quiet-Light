@@ -39,7 +39,6 @@ namespace _Project.CodeBase.Architecture.EntryPoints
             var menuPrefab = Resources.Load<MainMenu>(Paths.MainMenu);
             _diContainer.InstantiatePrefab(menuPrefab);
             _inputService.SetCursor(true);
-            _audioManager.SetMusic(true);
         }
     }
 }
